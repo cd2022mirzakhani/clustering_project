@@ -6,6 +6,29 @@
 
 #### Our initial hypothesis is that drivers of LogErrors will be a combination of elements/features that cause an increase of Zestimate LogError.
 
+### Data Dictionary
+| Feature | Definition | Type |
+|:--------|:-----------|:-------
+|**parcelid**|  Unique identifier for parcels (lots) | *int*|
+| **bathroooms** |  Number of bathrooms in home |*float*|
+| **bedrooms** | Number of bedrooms in home |*int*|
+|**sqft**| Area of home in square feet | *int*|
+|**year_built**| Year home was built| *int*|
+|**latitude**| Latitude of the middle of the parcel | *float*|
+|**longitude**| Longitude of the middle of the parcel | *float*|
+|**lotsizesquarefeet**|  Area of the lot in square feet | *float*|
+|**fireplace**| Number of fireplaces in home | *float*|
+|**deck**| Number of decks in home | *float*|
+|**pool**| Number of pools in home | *float*|
+|**garage**| Number of garages in home | *float*|
+|**hottub**| Number of hottubs in home | *float*|
+|**county**| County where the home is located | *string*|
+|**2017_age**| Age of the home as of 2017 | *int*|
+|**Target Variable**
+|**logerror**| 𝑙𝑜𝑔𝑒𝑟𝑟𝑜𝑟=𝑙𝑜𝑔(𝑍𝑒𝑠𝑡𝑖𝑚𝑎𝑡𝑒)−𝑙𝑜𝑔(𝑆𝑎𝑙𝑒𝑃𝑟𝑖𝑐𝑒) | *float* |
+
+
+
 ### The Plan
 * Aquire data from the CodeUp database
 * Prepare data for exploration by creating tailored columns from existing data

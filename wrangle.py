@@ -149,7 +149,7 @@ def scale_zillow(train, validate, test, target):
     '''
     Takes in train, validate, test and a list of features to scale
     and scales those features.
-    Returns df with new columns with scaled data
+    Returns df with new columns with scaled data exluding target variable - LogError.
     '''
     scale_features=list(train.select_dtypes(include=np.number).columns)
     scale_features.remove(target)

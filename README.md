@@ -1,69 +1,43 @@
-# Clustering Project
-## Let's try to improve our home value model
+# CodeUp-DS-Zillow-Zestimate-Project
 
-## Project Description
-C
+### Project Goals
+* Identify key features that can be used to create an effective predictive model
+* Use features to develop a machine learning model that predicts the Zestimate LogErrors
 
-## Project Goals
-* Identify key features that can be used to create an effective predictive model.
-* Use regression models to make XXXXXXXXXXXXX predictions.
-* Use findings to make recommendations and establish a foundation for future work to improve model's performance.
+#### Our initial hypothesis is that drivers of LogErrors will be a combination of elements/features that cause an increase of Zestimate LogError.
 
-## Initial Thoughts
+### The Plan
+* Aquire data from the CodeUp database
+* Prepare data for exploration by creating tailored columns from existing data
 
-My initial hypothesis is that .
+#### Explore data in search of drivers by asking the basic following questions:
 
-## The Plan
-* Aqcuire the data from Codeup mySQL database
+* What is the distribution of LogError by county?
+* What features should we investigate?
 
-* Prepare data
-    * 
-    * 
-    * 
+#### Develop a Model to predict LogError
 
-* Explore data in search of drivers of churn
-    * Answer the following initial question
-        * 
-        * 
+* Use drivers identified to build predictive models of different types
+* Evaluate models on train and validate data samples
+* Select the best model based on RSME
+* Evaluate the best model on test data samples
 
-* Develop a model to predict the value of a house
-    * 
-    * 
-    * 
+#### Draw conclusions
 
-* Draw conclusions
-
-## Data dictionary
-| Feature | Definition | Type |
-|:--------|:-----------|:-------
-|**???**| Definition| *type*|
-|**???**| Definition| *type*|
-|**???**| Definition| *type*|
-|**???**| Definition| *type*|
-|**???**| Definition| *type*|
-|**???**| Definition| *type*|
-|**???**| Definition| *type*|
-|**Target variable**
-|**home_value**| Appraised home value | *float* |
+### Steps to Reproduce
+* Clone this repo.
+* Confirm variables from user env.py file as
+        username = 'your user name', 
+        password = 'your password', 
+        host = 'data.codeup.com'password pwd, etc.)
+* Acquire the data from CodeUp database
+* Put the data in the file containing the cloned repo.
+* Run notebook
+### Conclusions
 
 
-## Steps to Reproduce
-1. Clone this repo
-2. Acquire the data from Codeup mySQL "telco" database using your personal ```env.py``` file where you store your ```username```, ```password```, and ```host```
-3. Put the data in the file containing the cloned repo.
-4. Run notebook.
 
-## Takeaways and Conclusions
-* 
-* 
+### Key Takeaway
 
-## Recommendations
-* :
-    * 
-    * 
-    * 
 
-## Next Steps
-* In the next iteration:
-    * 
-    * 
+### Recommendations

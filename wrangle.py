@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 from sklearn.model_selection import train_test_split
-
+import sklearn.preprocessing as pre
 from sklearn.impute import SimpleImputer
 
 import env
@@ -37,7 +37,6 @@ def new_zillow_data():
             longitude,
             lotsizesquarefeet,
             yearbuilt,
-            predictions_2017.logerror,
             fireplacecnt AS fireplace,
             decktypeid AS deck, 
             poolcnt AS pool, 
@@ -96,7 +95,7 @@ def create_age(df):
     df.drop(columns='yearbuilt', inplace=True)
     return df
 
-def nulls_to_zeros(df, columns):
+def nulls_to_zeros(df, columns=['pool','deck', 'fireplace', 'garage', 'hottub']):
     '''
     Takes in df and and a list of column names and replaces nulls with 0
     returns data frame
@@ -107,10 +106,12 @@ def nulls_to_zeros(df, columns):
         df[feature] = df[feature].fillna(0)
     return df
 
-def clean_zillow(df, features):
-    df = nulls_to_zeros(df, features)
+def clean_zillow(df):
+    df = nulls_to_zeros(df)
     df = give_county_names(df)
     df = create_age(df)
+    # create acres variable
+    df['acres'] = df.lotsizesquarefeet/43560
     df.dropna(inplace=True)
     return df
 
@@ -150,3 +151,32 @@ def scale_zillow(train, validate, test):
                                                  columns=test[scale_features].columns.values).set_index([test.index.values])
     
     return train_scaled, validate_scaled, test_scaled
+
+def prep_for_model(train, validate, test, target, drivers):
+    '''
+    Takes in train, validate, and test data frames
+    then splits  for X (all variables but target variable) 
+    and y (only target variable) for each data frame
+    '''
+    #scale data
+    train_scaled, validate_scaled, test_scaled = scale_zillow(train, validate, test)
+    
+    #make list of cat variables to make dummies for
+    cat_vars = list(train.select_dtypes(exclude=np.number).columns)
+    
+    X_train = train_scaled[drivers]
+    dummy_df_train = pd.get_dummies(X_train[cat_vars], dummy_na=False, drop_first=[True, True])
+    X_train = pd.concat([X_train, dummy_df_train], axis=1).drop(columns=cat_vars)
+    y_train = train[target]
+
+    X_validate = validate_scaled[drivers]
+    dummy_df_validate = pd.get_dummies(X_validate[cat_vars], dummy_na=False, drop_first=[True, True])
+    X_validate = pd.concat([X_validate, dummy_df_validate], axis=1).drop(columns=cat_vars)
+    y_validate = validate[target]
+
+    X_test = test_scaled[drivers]
+    dummy_df_test = pd.get_dummies(X_test[cat_vars], dummy_na=False, drop_first=[True, True])
+    X_test = pd.concat([X_test, dummy_df_test], axis=1).drop(columns=cat_vars)
+    y_test = test[target]
+
+    return X_train, y_train, X_validate, y_validate, X_test, y_test

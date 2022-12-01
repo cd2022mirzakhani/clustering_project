@@ -147,9 +147,9 @@ def split_data(df, test_size=0.15):
 
 def scale_zillow(train, validate, test, target):
     '''
-    Takes in train, validate, test and a list of features to scale
-    and scales those features.
-    Returns df with new columns with scaled data
+    Takes in train, validate, test and the target variable.
+    Returns df with new columns with scaled data for the numeric
+    columns besides the target variable
     '''
     scale_features=list(train.select_dtypes(include=np.number).columns)
     scale_features.remove(target)

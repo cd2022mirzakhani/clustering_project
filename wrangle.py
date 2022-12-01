@@ -106,13 +106,32 @@ def nulls_to_zeros(df, columns=['pool','deck', 'fireplace', 'garage', 'hottub'])
         df[feature] = df[feature].fillna(0)
     return df
 
+def have_or_havenot(df):
+    df['fireplace'].mask(df['fireplace'] >0 ,1, inplace=True)
+    df['deck'].mask(df['deck'] >0 ,1, inplace=True)
+    df['garage'].mask(df['garage'] >0 ,1, inplace=True)
+    df['pool'].mask(df['pool'] >0 ,1, inplace=True)
+    df['hottub'].mask(df['garage'] >0 ,1, inplace=True)    
+    return df 
+
+def convert_dtypes(df):
+    df["bedrooms"] = df["bedrooms"].astype(int)   
+    df["sqft"] = df["sqft"].astype(int)
+    df['fireplace'] = df['fireplace'].astype(int)
+    df['deck'] = df['deck'].astype(int)
+    df['garage'] = df['garage'].astype(int)
+    df['pool'] = df['pool'].astype(int)
+    df['hottub'] = df['hottub'].astype(int)
+    df['lotsizesquarefeet'] = df['lotsizesquarefeet'].astype(int)
+    return df
+
 def clean_zillow(df):
     df = nulls_to_zeros(df)
+    df = have_or_havenot(df)
     df = give_county_names(df)
     df = create_age(df)
-    # create acres variable
-    df['acres'] = df.lotsizesquarefeet/43560
     df.dropna(inplace=True)
+    df = convert_dtypes(df)
     return df
 
 def split_data(df, test_size=0.15):
@@ -126,13 +145,14 @@ def split_data(df, test_size=0.15):
     
     return train, validate, test
 
-def scale_zillow(train, validate, test):
+def scale_zillow(train, validate, test, target):
     '''
     Takes in train, validate, test and a list of features to scale
     and scales those features.
     Returns df with new columns with scaled data
     '''
     scale_features=list(train.select_dtypes(include=np.number).columns)
+    scale_features.remove(target)
     
     train_scaled = train.copy()
     validate_scaled = validate.copy()

@@ -17,11 +17,11 @@
 |**latitude**| Latitude of the middle of the parcel | *float*|
 |**longitude**| Longitude of the middle of the parcel | *float*|
 |**lotsizesquarefeet**|  Area of the lot in square feet | *float*|
-|**fireplace**| Number of fireplaces in home | *float*|
-|**deck**| Number of decks in home | *float*|
-|**pool**| Number of pools in home | *float*|
-|**garage**| Number of garages in home | *float*|
-|**hottub**| Number of hottubs in home | *float*|
+|**fireplace**| Is there a fireplace? 1-Yes, 0-No  | *float*|
+|**deck**| Is there a deck? 1-Yes, 0-No | *float*|
+|**pool**| Is there a pool? 1-Yes, 0-No  | *float*|
+|**garage**| Is there a garage? 1-Yes, 0-No  | *float*|
+|**hottub**| Is there a hottub? 1-Yes, 0-No  | *float*|
 |**county**| County where the home is located | *string*|
 |**2017_age**| Age of the home as of 2017 | *int*|
 |**Target Variable**
@@ -50,7 +50,7 @@
 ### Steps to Reproduce
 * Clone this repo.
 * Confirm variables from user env.py file as
-        username = 'your user name', 
+        username = 'your username', 
         password = 'your password', 
         host = 'data.codeup.com'password pwd, etc.)
 * Acquire the data from CodeUp database

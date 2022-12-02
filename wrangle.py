@@ -172,31 +172,29 @@ def scale_zillow(train, validate, test, target):
     
     return train_scaled, validate_scaled, test_scaled
 
-def prep_for_model(train, validate, test, target, drivers):
+def encode_cat_features(train_scaled, validate_scaled, test_scaled, dummy_cols):
+    train_scaled = pd.get_dummies(data = train_scaled, columns=dummy_cols)
+
+    validate_scaled = pd.get_dummies(data=validate_scaled, columns=dummy_cols)
+
+    test_scaled = pd.get_dummies(data= test_scaled, columns=dummy_cols)
+
+    return train_scaled, validate_scaled, test_scaled
+
+def prep_for_model(train_scaled, validate_scaled, test_scaled, target, drivers):
     '''
-    Takes in train, validate, and test data frames
+    Takes in scaled train, validate, and test data frames
     then splits  for X (all variables but target variable) 
     and y (only target variable) for each data frame
     '''
-    #scale data
-    train_scaled, validate_scaled, test_scaled = scale_zillow(train, validate, test)
-    
-    #make list of cat variables to make dummies for
-    cat_vars = list(train.select_dtypes(exclude=np.number).columns)
     
     X_train = train_scaled[drivers]
-    dummy_df_train = pd.get_dummies(X_train[cat_vars], dummy_na=False, drop_first=[True, True])
-    X_train = pd.concat([X_train, dummy_df_train], axis=1).drop(columns=cat_vars)
-    y_train = train[target]
+    y_train = train_scaled[target]
 
     X_validate = validate_scaled[drivers]
-    dummy_df_validate = pd.get_dummies(X_validate[cat_vars], dummy_na=False, drop_first=[True, True])
-    X_validate = pd.concat([X_validate, dummy_df_validate], axis=1).drop(columns=cat_vars)
-    y_validate = validate[target]
+    y_validate = validate_scaled[target]
 
     X_test = test_scaled[drivers]
-    dummy_df_test = pd.get_dummies(X_test[cat_vars], dummy_na=False, drop_first=[True, True])
-    X_test = pd.concat([X_test, dummy_df_test], axis=1).drop(columns=cat_vars)
-    y_test = test[target]
+    y_test = test_scaled[target]
 
     return X_train, y_train, X_validate, y_validate, X_test, y_test

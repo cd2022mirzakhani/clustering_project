@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from scipy import stats
-
+alpha = 0.05
 def logerror_dist_by_county(train):
     '''
     Take in zillow train dataframe and plots a histogram

@@ -56,11 +56,9 @@
 * Acquire the data from CodeUp database
 * Put the data in the file containing the cloned repo.
 * Run notebook
-### Conclusions
 
-
-
-### Key Takeaway
-
+### Conclusions & Key Takeaway
+Although results from the Quadradic model on the test sample data set outperformed the baseline model, the difference in the score was not significant enough to recommend the model.
 
 ### Recommendations
+Recommendations are to continue with current Zestimate LogError model until further notice.

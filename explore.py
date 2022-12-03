@@ -118,6 +118,13 @@ def location_total_size_cluster_1_ttest(train):
     logerror_mean = train.logerror.mean()
     location_total_size_cluster_1 = train[train['location_total_size_cluster'] ==1].logerror
     p = stats.ttest_1samp(location_total_size_cluster_1,logerror_mean)
+    
+    
+    if p < alpha:
+        print('We reject the null hypothesis')
+    else:
+        print('We fail to reject the null hypothesis')
+
     print(f'p-value: {p}')
 
 def special_features_cluster_plot(train):
@@ -149,4 +156,10 @@ def special_features_cluster_1_ttest(train):
     logerror_mean = train.logerror.mean()
     special_features_cluster_1 = train[train['special_features_cluster'] ==1].logerror
     p = stats.ttest_1samp(special_features_cluster_1,logerror_mean)
+    
+    if p < alpha:
+        print('We reject the null hypothesis')
+    else:
+        print('We fail to reject the null hypothesis')
+
     print(f'p-value: {p}')

@@ -15,7 +15,7 @@ def logerror_dist_by_county(train):
     #set plot style
     sns.set_style('white')
     #set size
-    fig, ax = plt.subplots(1,1, figsize=(20,12))
+    fig, ax = plt.subplots(1,1, figsize=(20,8))
 
     #plot distribution by county
     sns.histplot(train[train.county=='LA'].logerror, kde=True, ax=ax, binwidth=.01, color='#d55e00', label='LA', alpha=0.75)

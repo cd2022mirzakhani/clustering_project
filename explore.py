@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from scipy import stats
-alpha = 0.05
+
 def logerror_dist_by_county(train):
     '''
     Take in zillow train dataframe and plots a histogram
@@ -15,7 +15,7 @@ def logerror_dist_by_county(train):
     #set plot style
     sns.set_style('white')
     #set size
-    fig, ax = plt.subplots(1,1, figsize=(20,8))
+    fig, ax = plt.subplots(1,1, figsize=(20, 8))
 
     #plot distribution by county
     sns.histplot(train[train.county=='LA'].logerror, kde=True, ax=ax, binwidth=.01, color='#d55e00', label='LA', alpha=0.75)
@@ -112,12 +112,13 @@ def mean_logerror_location_total_size_centroids(train):
         print(f"Centroid {i} : {train[train['location_total_size_cluster'] ==i].logerror.mean()}\n-------------------")
 
 def location_total_size_cluster_1_ttest(train):
+    alpha = 0.05
     '''
     
     '''
     logerror_mean = train.logerror.mean()
     location_total_size_cluster_1 = train[train['location_total_size_cluster'] ==1].logerror
-    p = stats.ttest_1samp(location_total_size_cluster_1,logerror_mean)
+    t, p = stats.ttest_1samp(location_total_size_cluster_1,logerror_mean)
     
     
     if p < alpha:
@@ -150,12 +151,13 @@ def mean_logerror_special_features_centroids(train):
 
 
 def special_features_cluster_1_ttest(train):
+    alpha = 0.05
     '''
     
     '''
     logerror_mean = train.logerror.mean()
     special_features_cluster_1 = train[train['special_features_cluster'] ==1].logerror
-    p = stats.ttest_1samp(special_features_cluster_1,logerror_mean)
+    t, p = stats.ttest_1samp(special_features_cluster_1,logerror_mean)
     
     if p < alpha:
         print('We reject the null hypothesis')

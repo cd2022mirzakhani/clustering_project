@@ -83,12 +83,24 @@ def acquire_zillow_data(new = False):
           
     return df
 
+###################################################
+#################### CLEAN DATA ###################
+###################################################
+
 def give_county_names(df):
+    '''
+    Takes in zillow data frame and creates a column 'county'
+    based on the fips number in the data, returns data frame
+    '''
     df['county'] = df.fips.replace({6037:'LA', 6059:'Orange', 6111:'Ventura'})
     df.drop(columns='fips', inplace=True)
     return df
 
 def create_age(df):
+    '''
+    Takes in zillow data frame and creates a column '2017_age'
+    based on the yearbuilt in the data, returns data frame
+    '''
     df["yearbuilt"] = df["yearbuilt"].astype(int)
     df["2017_age"] = 2017 - df.yearbuilt
     df["2017_age"] = df["2017_age"].astype(int)
@@ -107,6 +119,10 @@ def nulls_to_zeros(df, columns=['pool','deck', 'fireplace', 'garage', 'hottub'])
     return df
 
 def have_or_havenot(df):
+    '''
+    Takes in zillow dataframe and replaces number greater than 0 
+    as a 1 to encode our special features, returns a data frame
+    '''
     df['fireplace'].mask(df['fireplace'] >0 ,1, inplace=True)
     df['deck'].mask(df['deck'] >0 ,1, inplace=True)
     df['garage'].mask(df['garage'] >0 ,1, inplace=True)
@@ -115,6 +131,10 @@ def have_or_havenot(df):
     return df 
 
 def convert_dtypes(df):
+    '''
+    Takes in zillow data frame and converts types of each column
+    returns data frame
+    '''
     df["bedrooms"] = df["bedrooms"].astype(int)   
     df["sqft"] = df["sqft"].astype(int)
     df['fireplace'] = df['fireplace'].astype(int)
@@ -126,6 +146,9 @@ def convert_dtypes(df):
     return df
 
 def clean_zillow(df):
+    '''
+    Takes in zillow data frame and returns a clean data frame
+    '''
     df = nulls_to_zeros(df)
     df = have_or_havenot(df)
     df = give_county_names(df)
@@ -133,6 +156,10 @@ def clean_zillow(df):
     df.dropna(inplace=True)
     df = convert_dtypes(df)
     return df
+
+###################################################
+################# SPLIT/PREP DATA #################
+###################################################
 
 def split_data(df, test_size=0.15):
     '''
@@ -173,6 +200,11 @@ def scale_zillow(train, validate, test, target):
     return train_scaled, validate_scaled, test_scaled
 
 def encode_cat_features(train_scaled, validate_scaled, test_scaled, dummy_cols):
+    '''
+    Takes in train_scaled, validate_scaled, test_scaled, and a list of columns
+    you want to encode, and creates dummies on each data frame
+    returns train_scaled, validate_scaled, test_scaled, with new encoded columns
+    '''
     train_scaled = pd.get_dummies(data = train_scaled, columns=dummy_cols)
 
     validate_scaled = pd.get_dummies(data=validate_scaled, columns=dummy_cols)

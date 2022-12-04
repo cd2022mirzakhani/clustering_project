@@ -31,7 +31,8 @@ def logerror_dist_by_county(train):
 
 def sqft_lotsize_cluster_plot(train):
     '''
-    
+    Takes in a dataframe and plots two graphs based on 
+    the sqft_lotsize_cluster
     '''
     sns.set(font_scale=1.5)
     sns.set_style('white')
@@ -56,7 +57,8 @@ def sqft_lotsize_cluster_plot(train):
 
 def location_home_size_cluster_plot(train):
     '''
-    
+    Takes in a dataframe and plots four graphs based on 
+    the location_home_size_cluster
     '''
     sns.set(font_scale=1.5)
     sns.set_style('white')
@@ -92,7 +94,8 @@ def location_home_size_cluster_plot(train):
 
 def location_total_size_cluster_plot(train):
     '''
-    
+    Takes in a dataframe and plots a graph comparing logerror 
+    and the location_total_size_cluster
     '''
     sns.set(font_scale=1.5)
     sns.set_style('white')
@@ -106,6 +109,10 @@ def location_total_size_cluster_plot(train):
     plt.show()
 
 def mean_logerror_location_total_size_centroids(train):
+    '''
+    Takes in train and returns the mean logerror of each centroid
+    in the location_total_size_cluster
+    '''
     logerror_mean = train.logerror.mean()
     print(f'Mean logerror\ntrain (all): {logerror_mean}\n-------------------')
     for i in range(0,6):
@@ -114,23 +121,23 @@ def mean_logerror_location_total_size_centroids(train):
 def location_total_size_cluster_1_ttest(train):
     alpha = 0.05
     '''
-    
+    Takes in train and returns the results of a one sample 
+    ttest on location_total_size_cluster_1
     '''
     logerror_mean = train.logerror.mean()
     location_total_size_cluster_1 = train[train['location_total_size_cluster'] ==1].logerror
     t, p = stats.ttest_1samp(location_total_size_cluster_1,logerror_mean)
     
-    
-    if p < alpha:
-        print('We reject the null hypothesis')
-    else:
-        print('We fail to reject the null hypothesis')
-
     print(f'p-value: {p}')
+    if p < alpha:
+        print('p < alpha so we reject the null hypothesis')
+    else:
+        print('p > alpha so we fail to reject the null hypothesis')
 
 def special_features_cluster_plot(train):
     '''
-    
+    Takes in a dataframe and plots a graph comparing logerror 
+    and the special_features_cluster
     '''
     sns.set(font_scale=1.5)
     sns.set_style('white')
@@ -144,6 +151,10 @@ def special_features_cluster_plot(train):
     plt.show()
 
 def mean_logerror_special_features_centroids(train):
+    '''
+    Takes in train and returns the mean logerror of each centroid
+    in the special_features_cluster
+    '''
     logerror_mean = train.logerror.mean()
     print(f'Mean logerror\ntrain (all): {logerror_mean}\n-------------------')
     for i in range(0,5):
@@ -153,15 +164,17 @@ def mean_logerror_special_features_centroids(train):
 def special_features_cluster_1_ttest(train):
     alpha = 0.05
     '''
-    
+    Takes in train and returns the results of a one sample 
+    ttest on special_features_cluster_1
     '''
     logerror_mean = train.logerror.mean()
     special_features_cluster_1 = train[train['special_features_cluster'] ==1].logerror
     t, p = stats.ttest_1samp(special_features_cluster_1,logerror_mean)
     
-    if p < alpha:
-        print('We reject the null hypothesis')
-    else:
-        print('We fail to reject the null hypothesis')
-
     print(f'p-value: {p}')
+    if p < alpha:
+        print('p < alpha so we reject the null hypothesis')
+    else:
+        print('p > alpha so we fail to reject the null hypothesis')
+
+

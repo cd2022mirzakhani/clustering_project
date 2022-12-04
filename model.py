@@ -13,33 +13,38 @@ def create_clusters(train, train_scaled, validate_scaled, test_scaled):
     '''
     kmeans_scale5 = KMeans(n_clusters=5, random_state=27)
     kmeans_scale6 = KMeans(n_clusters=6, random_state=27)
+    
     #make cluster for sqft and lotsizesquarefeet
-    kmeans_scale5.fit(train_scaled[['sqft', 'lotsizesquarefeet']])
-    train['sqft_lotsize_cluster'] = kmeans_scale5.predict(train_scaled[['sqft', 'lotsizesquarefeet']])
-    train_scaled['sqft_lotsize_cluster'] = kmeans_scale5.predict(train_scaled[['sqft', 'lotsizesquarefeet']])
-    validate_scaled['sqft_lotsize_cluster'] = kmeans_scale5.predict(validate_scaled[['sqft', 'lotsizesquarefeet']])
-    test_scaled['sqft_lotsize_cluster'] = kmeans_scale5.predict(test_scaled[['sqft', 'lotsizesquarefeet']])
+    features1= ['sqft', 'lotsizesquarefeet']
+    kmeans_scale5.fit(train_scaled[features1])
+    train['sqft_lotsize_cluster'] = kmeans_scale5.predict(train_scaled[features1])
+    train_scaled['sqft_lotsize_cluster'] = kmeans_scale5.predict(train_scaled[features1])
+    validate_scaled['sqft_lotsize_cluster'] = kmeans_scale5.predict(validate_scaled[features1])
+    test_scaled['sqft_lotsize_cluster'] = kmeans_scale5.predict(test_scaled[features1])
 
     #make cluster for latitude, longitude, and sqft
-    kmeans_scale6.fit(train_scaled[['latitude', 'longitude', 'sqft']])
-    train['location_home_size_cluster'] = kmeans_scale6.predict(train_scaled[['latitude', 'longitude', 'sqft']])
-    train_scaled['location_home_size_cluster'] = kmeans_scale6.predict(train_scaled[['latitude', 'longitude', 'sqft']])
-    validate_scaled['location_home_size_cluster'] = kmeans_scale6.predict(validate_scaled[['latitude', 'longitude', 'sqft']])
-    test_scaled['location_home_size_cluster'] = kmeans_scale6.predict(test_scaled[['latitude', 'longitude', 'sqft']])
+    features2= ['latitude', 'longitude', 'sqft']
+    kmeans_scale6.fit(train_scaled[features2])
+    train['location_home_size_cluster'] = kmeans_scale6.predict(train_scaled[features2])
+    train_scaled['location_home_size_cluster'] = kmeans_scale6.predict(train_scaled[features2])
+    validate_scaled['location_home_size_cluster'] = kmeans_scale6.predict(validate_scaled[features2])
+    test_scaled['location_home_size_cluster'] = kmeans_scale6.predict(test_scaled[features2])
     
     #make cluster for sqft, lotsizesquarefeet, latitude and longitude
-    kmeans_scale6.fit(train_scaled[['sqft', 'lotsizesquarefeet', 'latitude', 'longitude']])
-    train['location_total_size_cluster'] = kmeans_scale6.predict(train_scaled[['sqft', 'lotsizesquarefeet', 'latitude', 'longitude']])
-    train_scaled['location_total_size_cluster'] = kmeans_scale6.predict(train_scaled[['sqft', 'lotsizesquarefeet', 'latitude', 'longitude']])
-    validate_scaled['location_total_size_cluster'] = kmeans_scale6.predict(validate_scaled[['sqft', 'lotsizesquarefeet', 'latitude', 'longitude']])
-    test_scaled['location_total_size_cluster'] = kmeans_scale6.predict(test_scaled[['sqft', 'lotsizesquarefeet', 'latitude', 'longitude']])
+    features3=['sqft', 'lotsizesquarefeet', 'latitude', 'longitude']
+    kmeans_scale6.fit(train_scaled[features3])
+    train['location_total_size_cluster'] = kmeans_scale6.predict(train_scaled[features3])
+    train_scaled['location_total_size_cluster'] = kmeans_scale6.predict(train_scaled[features3])
+    validate_scaled['location_total_size_cluster'] = kmeans_scale6.predict(validate_scaled[features3])
+    test_scaled['location_total_size_cluster'] = kmeans_scale6.predict(test_scaled[features3])
     
     #make cluster for 'pool','deck','garage','hottub', 'fireplace'
-    kmeans_scale5.fit(train_scaled[['pool','deck','garage','hottub', 'fireplace']])
-    train['special_features_cluster'] = kmeans_scale5.predict(train_scaled[['pool','deck','garage','hottub', 'fireplace']])
-    train_scaled['special_features_cluster'] = kmeans_scale5.predict(train_scaled[['pool','deck','garage','hottub', 'fireplace']])
-    validate_scaled['special_features_cluster'] = kmeans_scale5.predict(validate_scaled[['pool','deck','garage','hottub', 'fireplace']])
-    test_scaled['special_features_cluster'] = kmeans_scale5.predict(test_scaled[['pool','deck','garage','hottub', 'fireplace']])
+    features4=['pool','deck','garage','hottub', 'fireplace']
+    kmeans_scale5.fit(train_scaled[features4])
+    train['special_features_cluster'] = kmeans_scale5.predict(train_scaled[features4])
+    train_scaled['special_features_cluster'] = kmeans_scale5.predict(train_scaled[features4])
+    validate_scaled['special_features_cluster'] = kmeans_scale5.predict(validate_scaled[features4])
+    test_scaled['special_features_cluster'] = kmeans_scale5.predict(test_scaled[features4])
 
     return train, train_scaled, validate_scaled, test_scaled
 
